@@ -341,6 +341,21 @@ border-radius:50%;
 animation:spin .7s linear infinite;
 }
 
+
+.paso{
+opacity:1;
+transform:translateY(0);
+transition:all .35s ease;
+}
+
+.paso.oculto{
+opacity:0;
+transform:translateY(20px);
+pointer-events:none;
+position:absolute;
+width:100%;
+}
+
 </style>
 
 </head>
@@ -384,7 +399,7 @@ animation:spin .7s linear infinite;
 
 <div class="compra-desplegable" id="comprar">
 
-<div id="paso1">
+<div id="paso1" class="paso">
 
 <div class="section">
 
@@ -423,8 +438,8 @@ COMPRAR
 </div>
 
 
-<div id="paso2" style="display:none">
-
+<div id="paso2" class="paso oculto">
+  
 <div class="section">
 
 <h2>Transferir</h2>
@@ -887,10 +902,15 @@ document.getElementById("btnSiguiente").style.display="block"
 
 function mostrarFormulario(){
 
-document.getElementById("paso1").style.display="none"
-document.getElementById("paso2").style.display="block"
+const paso1=document.getElementById("paso1")
+const paso2=document.getElementById("paso2")
 
-document.getElementById("paso2").scrollIntoView({behavior:"smooth"})
+paso1.classList.add("oculto")
+
+setTimeout(()=>{
+paso2.classList.remove("oculto")
+paso2.scrollIntoView({behavior:"smooth"})
+},200)
 
 }
 
