@@ -356,6 +356,120 @@ position:absolute;
 width:100%;
 }
 
+.creadoras-bar{
+width:100%;
+overflow:hidden;
+border-radius:14px;
+background:#0e0e0e;
+border:1px solid #1f1f1f;
+padding:16px 0;
+margin-bottom:16px;
+}
+
+.creadoras-track{
+display:flex;
+gap:30px;
+white-space:nowrap;
+animation:scrollCreadoras 22s linear infinite;
+font-size:14px;
+}
+
+.creadoras-track span{
+background:#161616;
+padding:8px 14px;
+border-radius:20px;
+border:1px solid #262626;
+color:#e6e6e6;
+flex-shrink:0;
+}
+
+@keyframes scrollCreadoras{
+0%{transform:translateX(0)}
+100%{transform:translateX(-50%)}
+}
+
+.creadoras-container{
+margin-bottom:20px;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.creadoras-row{
+overflow:hidden;
+background:#0e0e0e;
+border:1px solid #1f1f1f;
+border-radius:12px;
+padding:10px 0;
+}
+
+.creadoras-track{
+display:flex;
+width:max-content;
+}
+
+.track-inner{
+display:flex;
+gap:24px;
+white-space:nowrap;
+}
+
+.creadoras-track span{
+background:#161616;
+border:1px solid #262626;
+padding:7px 14px;
+border-radius:20px;
+font-size:13px;
+color:#e6e6e6;
+flex-shrink:0;
+}
+
+.row1 .creadoras-track{
+animation:scroll1 27s linear infinite;
+}
+
+.row2 .creadoras-track{
+animation:scroll2 21s linear infinite;
+}
+
+.row3 .creadoras-track{
+animation:scroll1 33s linear infinite;
+}
+
+@keyframes scroll1{
+0%{transform:translateX(0)}
+100%{transform:translateX(-50%)}
+}
+
+@keyframes scroll2{
+0%{transform:translateX(-50%)}
+100%{transform:translateX(0)}
+}
+
+.stats-vip{
+display:flex;
+justify-content:space-between;
+margin-top:14px;
+gap:10px;
+}
+
+.stat{
+flex:1;
+background:linear-gradient(135deg,#1a1a1a,#0f0f0f);
+border:1px solid #262626;
+border-radius:12px;
+padding:14px;
+text-align:center;
+font-size:14px;
+color:#dcdcdc;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+.stat b{
+font-size:18px;
+color:white;
+}
+
 </style>
 
 </head>
@@ -371,7 +485,7 @@ width:100%;
 <div class="container" id="pagina">
 
 <div class="hero">
-<h1>Lo mejor de ARG 🇦🇷</h1>
+<h1>Lo mejor de Argentina</h1>
 
 <div class="features">
 🔥 +7900 fotos y videos exclusivos<br>
@@ -386,9 +500,225 @@ width:100%;
 
 <h2>Vista previa</h2>
 
-<video class="preview" autoplay muted loop playsinline>
-<source src="video.mp4" type="video/mp4">
-</video>
+<div class="creadoras-container">
+
+<div class="creadoras-row row1">
+<div class="creadoras-track">
+
+<div class="track-inner">
+<span>Abi paz</span>
+<span>Agus anon</span>
+<span>Aguz tana</span>
+<span>Alaska</span>
+<span>Alberree</span>
+<span>Angeles watters</span>
+<span>Anto pane</span>
+<span>Ari gameplays</span>
+<span>Aylu</span>
+<span>Barby silenzi</span>
+<span>Barroso melii</span>
+<span>Belu lachilena</span>
+<span>Biel postiglioni</span>
+<span>Bri marcos</span>
+<span>Caelytt</span>
+<span>Camve</span>
+<span>Cande robledo</span>
+<span>Cande tinelli</span>
+<span>Cane devoto</span>
+<span>Caritoalparato</span>
+<span>Cazzu</span>
+<span>Cinthia fernandez</span>
+<span>Clara kushh</span>
+<span>Coty romero</span>
+<span>Dai hernandez</span>
+<span>Delfi klein</span>
+<span>Delfyrago</span>
+<span>Emilia mernes</span>
+</div>
+
+<div class="track-inner">
+<span>Abi paz</span>
+<span>Agus anon</span>
+<span>Aguz tana</span>
+<span>Alaska</span>
+<span>Alberree</span>
+<span>Angeles watters</span>
+<span>Anto pane</span>
+<span>Ari gameplays</span>
+<span>Aylu</span>
+<span>Barby silenzi</span>
+<span>Barroso melii</span>
+<span>Belu lachilena</span>
+<span>Biel postiglioni</span>
+<span>Bri marcos</span>
+<span>Caelytt</span>
+<span>Camve</span>
+<span>Cande robledo</span>
+<span>Cande tinelli</span>
+<span>Cane devoto</span>
+<span>Caritoalparato</span>
+<span>Cazzu</span>
+<span>Cinthia fernandez</span>
+<span>Clara kushh</span>
+<span>Coty romero</span>
+<span>Dai hernandez</span>
+<span>Delfi klein</span>
+<span>Delfyrago</span>
+<span>Emilia mernes</span>
+</div>
+
+</div>
+</div>
+
+
+<div class="creadoras-row row2">
+<div class="creadoras-track">
+
+<div class="track-inner">
+<span>Evelyn</span>
+<span>Fati vazquez</span>
+<span>Fernanda farhat</span>
+<span>Flor davilla</span>
+<span>Flor peña</span>
+<span>Flor vigna</span>
+<span>Ingrid</span>
+<span>Isa brunelli</span>
+<span>Ivana nadal</span>
+<span>Jaz grieco</span>
+<span>Jazpincita</span>
+<span>Jesy fux</span>
+<span>Juli savioli</span>
+<span>Julieta poggio</span>
+<span>Kan giruy</span>
+<span>Karley ruiz</span>
+<span>Kiara tuliano</span>
+<span>La joaqui</span>
+<span>Lali esposito</span>
+<span>Luciana milessi</span>
+<span>Luna montes</span>
+<span>Luz quintero</span>
+<span>Madison segreti</span>
+<span>Magali verde</span>
+</div>
+
+<div class="track-inner">
+<span>Evelyn</span>
+<span>Fati vazquez</span>
+<span>Fernanda farhat</span>
+<span>Flor davilla</span>
+<span>Flor peña</span>
+<span>Flor vigna</span>
+<span>Ingrid</span>
+<span>Isa brunelli</span>
+<span>Ivana nadal</span>
+<span>Jaz grieco</span>
+<span>Jazpincita</span>
+<span>Jesy fux</span>
+<span>Juli savioli</span>
+<span>Julieta poggio</span>
+<span>Kan giruy</span>
+<span>Karley ruiz</span>
+<span>Kiara tuliano</span>
+<span>La joaqui</span>
+<span>Lali esposito</span>
+<span>Luciana milessi</span>
+<span>Luna montes</span>
+<span>Luz quintero</span>
+<span>Madison segreti</span>
+<span>Magali verde</span>
+</div>
+
+</div>
+</div>
+
+
+<div class="creadoras-row row3">
+<div class="creadoras-track">
+
+<div class="track-inner">
+<span>Maria becerra</span>
+<span>Maria del castillo</span>
+<span>Martu boden</span>
+<span>Mica copola</span>
+<span>Mica lafuente</span>
+<span>Mica rodriguez</span>
+<span>Micadeboe</span>
+<span>Mika rios</span>
+<span>More beltran</span>
+<span>Naaraalin</span>
+<span>Neyen herrera</span>
+<span>Nicki nicole</span>
+<span>Nicole alvarez</span>
+<span>Nicole figueroa</span>
+<span>Oriana bisconde</span>
+<span>Pauli belen</span>
+<span>Pri ismael</span>
+<span>Prii mora</span>
+<span>Romina malaspina</span>
+<span>Saramalacara</span>
+<span>Sasha ferro</span>
+<span>Selenetor</span>
+<span>Sofi fernandez</span>
+<span>Sol perez</span>
+<span>Tini stoesell</span>
+<span>Tuli acosta</span>
+<span>Valen madane</span>
+<span>Valen pinto</span>
+<span>Valentina goldzen</span>
+<span>Wanda nara</span>
+<span>Yarley</span>
+<span>Yuslopez</span>
+<span>Zowi</span>
+</div>
+
+<div class="track-inner">
+<span>Maria becerra</span>
+<span>Maria del castillo</span>
+<span>Martu boden</span>
+<span>Mica copola</span>
+<span>Mica lafuente</span>
+<span>Mica rodriguez</span>
+<span>Micadeboe</span>
+<span>Mika rios</span>
+<span>More beltran</span>
+<span>Naaraalin</span>
+<span>Neyen herrera</span>
+<span>Nicki nicole</span>
+<span>Nicole alvarez</span>
+<span>Nicole figueroa</span>
+<span>Oriana bisconde</span>
+<span>Pauli belen</span>
+<span>Pri ismael</span>
+<span>Prii mora</span>
+<span>Romina malaspina</span>
+<span>Saramalacara</span>
+<span>Sasha ferro</span>
+<span>Selenetor</span>
+<span>Sofi fernandez</span>
+<span>Sol perez</span>
+<span>Tini stoesell</span>
+<span>Tuli acosta</span>
+<span>Valen madane</span>
+<span>Valen pinto</span>
+<span>Valentina goldzen</span>
+<span>Wanda nara</span>
+<span>Yarley</span>
+<span>Yuslopez</span>
+<span>Zowi</span>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div class="stats-vip">
+
+<div class="stat">🔥 <b>+90 Famosas</b></div>
+<div class="stat">📸 <b>+7000 Archivos</b></div>
+<div class="stat">💾 <b>+15GB Contenido</b></div>
+
+</div>
 
 
 <button class="btn-comprar" onclick="mostrarCompra();">
@@ -413,15 +743,10 @@ width:100%;
 licho380.nx
 </div>
 
-(si das click copias el alias)
+<br>
 
-<br><br>
+2️⃣ Luego tocá el botón siguiente para enviar el comprobante
 
-2️⃣ Sacá captura del comprobante
-
-<br><br>
-
-3️⃣ Luego tocá el botón siguiente para enviar el comprobante
 
 <br><br>
 
@@ -430,7 +755,7 @@ El acceso es automatico e instantaneo
 </div>
 
 <button id="btnSiguiente" onclick="fbq('track','Lead'); mostrarFormulario()" style="display:none;">
-COMPRAR
+SIGUIENTE
 </button>
 
 </div>
@@ -451,6 +776,7 @@ COMPRAR
 <label for="file" class="file-label">
 📎 Subir comprobante
 </label>
+<br>  
 <input type="file" id="file">
 <span id="file-name">Ningún archivo seleccionado</span>
 </div>
@@ -894,7 +1220,7 @@ setTimeout(()=>{
 
 document.getElementById("btnSiguiente").style.display="block"
 
-},1500)
+},4500)
 
 }
 
@@ -945,7 +1271,6 @@ requestAnimationFrame(frame)
 
 </body>
 </html>
-
 
 
 
