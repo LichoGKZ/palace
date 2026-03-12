@@ -28,7 +28,9 @@ src="https://www.facebook.com/tr?id=1383716853246156&ev=PageView&noscript=1"/>
 </noscript>
   
 <style>
-
+*{
+box-sizing:border-box;
+}
 body{
 margin:0;
 font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial;
@@ -469,7 +471,16 @@ box-shadow:0 10px 25px rgba(0,0,0,0.4);
 font-size:18px;
 color:white;
 }
+.btn-aparecer{
+opacity:0;
+transform:translateY(10px);
+transition:all .4s ease;
+}
 
+.btn-aparecer.mostrar{
+opacity:1;
+transform:translateY(0);
+}
 </style>
 
 </head>
@@ -489,7 +500,7 @@ color:white;
 
 <div class="features">
 🔥 +7900 fotos y videos exclusivos<br>
-🔥 filtraciones reales<br>
+🔥 famosas argentinas<br>
 🔥 actualizaciones todos los días
 </div>
 
@@ -764,28 +775,71 @@ SIGUIENTE
 
 
 <div id="paso2" class="paso oculto">
-  
+
 <div class="section">
 
-<h2>Transferir</h2>
-<p>Alias: licho380.nx</p>
-<p>Monto: $3500</p>
-<input type="email" id="email" placeholder="Tu email">
+<h2 style="margin-bottom:18px;">Finalizar compra</h2>
 
-<div class="file-upload">
-<label for="file" class="file-label">
-📎 Subir comprobante
-</label>
-<br>  
-<input type="file" id="file">
-<span id="file-name">Ningún archivo seleccionado</span>
+<div class="payment-box">
+
+<div style="font-size:14px;color:#9f9f9f;margin-bottom:6px;">
+Transferí a este alias
 </div>
 
-<button onclick="enviarComprobante()">
-ENVIAR COMPROBANTE
+<div class="alias" onclick="copiarAlias()">
+licho380.nx
+</div>
+
+<div style="margin-top:18px;font-size:14px;color:#9f9f9f;">
+Monto a transferir
+</div>
+
+<div style="
+font-size:32px;
+font-weight:800;
+margin-top:4px;
+background:linear-gradient(90deg,#ff0055,#ff4b8f);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+">
+$3500
+</div>
+
+<input type="email" id="email" placeholder="Tu email" style="margin-top:20px;">
+
+<div class="file-upload" style="margin-top:14px;">
+
+<label for="file" class="file-label">
+📎 Subir comprobante de transferencia
+</label>
+
+<br>
+
+<input type="file" id="file">
+
+<span id="file-name" style="
+display:block;
+margin-top:6px;
+font-size:13px;
+color:#9a9a9a;
+">
+Ningún archivo seleccionado
+</span>
+
+</div>
+
+<button id="btnValidarPago" class="btn-aparecer" onclick="enviarComprobante()" style="display:none;">
+VALIDAR PAGO
 </button>
 
-<span>El acceso es automatico e instantaneo.</span>
+<div style="
+margin-top:12px;
+font-size:13px;
+color:#8f8f8f;
+text-align:center;
+">
+⚡ El acceso es automático e instantáneo
+</div>
 
 </div>
 
@@ -1230,15 +1284,27 @@ function mostrarFormulario(){
 
 const paso1=document.getElementById("paso1")
 const paso2=document.getElementById("paso2")
+const btn=document.getElementById("btnValidarPago")
 
 paso1.classList.add("oculto")
 
 setTimeout(()=>{
 paso2.classList.remove("oculto")
 paso2.scrollIntoView({behavior:"smooth"})
+
+setTimeout(()=>{
+btn.style.display="block"
+
+setTimeout(()=>{
+btn.classList.add("mostrar")
+},50)
+
+},3000)
+
 },200)
 
 }
+
 
 function lanzarConfetti(){
 
