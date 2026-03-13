@@ -1,36 +1,79 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
-<title>Redirigiendo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Discord</title>
+
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}
+(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '1383716853246156');
+fbq('track', 'PageView');
+
+function irDiscord(){
+fbq('track','Lead');
+
+setTimeout(function(){
+window.location.href="https://discord.gg/zmep5xzBWN";
+},300);
+}
+</script>
+
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1383716853246156&ev=PageView&noscript=1"/>
+</noscript>
 
 <style>
+
 body{
-background:#0f0f0f;
-color:#fff;
-font-family:Arial, sans-serif;
+margin:0;
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-font-size:28px;
+background:#36393f;
+font-family:Arial, Helvetica, sans-serif;
 }
-</style>
 
-<script>
-setTimeout(function(){
-document.getElementById("texto").innerText="Ingresando al Discord...";
-setTimeout(function(){
-window.location.href="https://discord.gg/zmep5xzBWN";
-},1000);
-},1000);
-</script>
+.boton-discord{
+background:#5865F2;
+color:white;
+font-size:26px;
+font-weight:bold;
+padding:20px 60px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+transition:all 0.2s;
+box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+
+.boton-discord:hover{
+background:#4752C4;
+transform:scale(1.05);
+}
+
+</style>
 
 </head>
 
 <body>
 
-<div id="texto">Cargando...</div>
+<button class="boton-discord" onclick="irDiscord()">
+Discord
+</button>
 
 </body>
 </html>
