@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Discord</title>
+<title>Contenido Argentina 🔥</title>
 
 <script>
 !function(f,b,e,v,n,t,s)
@@ -24,16 +25,14 @@ fbq('track', 'PageView');
 function irDiscord(){
 fbq('track','Lead');
 
+const boton=document.getElementById("boton");
+boton.innerText="Ingresando...";
+
 setTimeout(function(){
 window.location.href="https://discord.gg/zmep5xzBWN";
-},300);
+},400);
 }
 </script>
-
-<noscript>
-<img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1383716853246156&ev=PageView&noscript=1"/>
-</noscript>
 
 <style>
 
@@ -43,26 +42,79 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:#36393f;
-font-family:Arial, Helvetica, sans-serif;
-}
-
-.boton-discord{
-background:#5865F2;
+background:linear-gradient(135deg,#1e1f22,#2b2d31);
+font-family:Arial,Helvetica,sans-serif;
+overflow:hidden;
 color:white;
-font-size:26px;
-font-weight:bold;
-padding:20px 60px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-transition:all 0.2s;
-box-shadow:0 8px 20px rgba(0,0,0,0.4);
 }
 
-.boton-discord:hover{
+.contenedor{
+text-align:center;
+animation:fade 1.2s ease;
+}
+
+h1{
+font-size:40px;
+margin-bottom:40px;
+letter-spacing:1px;
+text-shadow:0 0 15px rgba(88,101,242,0.6);
+}
+
+.boton{
+background:#5865F2;
+border:none;
+color:white;
+font-size:24px;
+padding:18px 60px;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+box-shadow:0 10px 30px rgba(88,101,242,0.5);
+transition:all .25s;
+}
+
+.boton:hover{
+transform:scale(1.07);
 background:#4752C4;
-transform:scale(1.05);
+box-shadow:0 15px 40px rgba(88,101,242,0.7);
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.particulas{
+position:absolute;
+width:100%;
+height:100%;
+overflow:hidden;
+z-index:-1;
+}
+
+.particulas span{
+position:absolute;
+display:block;
+width:6px;
+height:6px;
+background:rgba(255,255,255,0.15);
+border-radius:50%;
+animation:subir 15s linear infinite;
+}
+
+@keyframes subir{
+from{
+transform:translateY(100vh);
+}
+to{
+transform:translateY(-10vh);
+}
 }
 
 </style>
@@ -71,9 +123,26 @@ transform:scale(1.05);
 
 <body>
 
-<button class="boton-discord" onclick="irDiscord()">
-Discord
+<div class="particulas">
+<span style="left:10%;animation-delay:0s"></span>
+<span style="left:20%;animation-delay:3s"></span>
+<span style="left:35%;animation-delay:5s"></span>
+<span style="left:50%;animation-delay:1s"></span>
+<span style="left:65%;animation-delay:7s"></span>
+<span style="left:80%;animation-delay:2s"></span>
+<span style="left:90%;animation-delay:6s"></span>
+</div>
+
+<div class="contenedor">
+
+<h1>Todo el contenido de Argentina 🔥</h1>
+
+<button id="boton" class="boton" onclick="irDiscord()">
+Entrar al Discord
 </button>
+
+</div>
 
 </body>
 </html>
+```
