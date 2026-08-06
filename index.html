@@ -16,14 +16,82 @@ s.parentNode.insertBefore(t,s)}
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1383716853246156');
 fbq('track', 'PageView');
-function irDiscord(){
-fbq('track','Lead');
-const boton=document.getElementById("boton");
-boton.innerText="Ingresando...";
-setTimeout(function(){
-window.location.href="https://discord.gg/gn627sW2pc";
-},400);
+
+// ----------- CONFIG -----------
+const BACKEND_URL = "https://palace-backend-rsk9.onrender.com"; // <-- reemplazar por la URL real del backend
+const DISCORD_INVITE = "https://discord.gg/gn627sW2pc";
+// -------------------------------
+
+function getCookie(name){
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? match[2] : null;
 }
+
+function getQueryParam(name){
+  return new URLSearchParams(window.location.search).get(name);
+}
+
+function buildFbc(){
+  // Si Meta ya seteó _fbc, usamos esa
+  const existing = getCookie('_fbc');
+  if (existing) return existing;
+  // Si no, y llegó con fbclid, lo armamos manualmente (formato oficial de Meta)
+  const fbclid = getQueryParam('fbclid');
+  if (fbclid) {
+    return `fb.1.${Date.now()}.${fbclid}`;
+  }
+  return null;
+}
+
+async function generarCodigo(){
+  const fbp = getCookie('_fbp');
+  const fbc = buildFbc();
+  const fbclid = getQueryParam('fbclid');
+
+  try{
+    const resp = await fetch(`${BACKEND_URL}/api/session`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ fbp, fbc, fbclid })
+    });
+    const data = await resp.json();
+    mostrarCodigo(data.code);
+  }catch(e){
+    // Si el backend falla, no bloqueamos al usuario: mostramos igual el botón
+    mostrarCodigo(null);
+  }
+}
+
+function mostrarCodigo(code){
+  const codigoEl = document.getElementById("codigo");
+  codigoEl.innerText = code || "ERROR";
+
+  // Botón "Entrar" recién aparece a los 1.5s
+  setTimeout(()=>{
+    document.getElementById("boton").style.display = "inline-block";
+  }, 1500);
+}
+
+function copiarCodigo(){
+  const code = document.getElementById("codigo").innerText;
+  navigator.clipboard.writeText(code).then(()=>{
+    const aviso = document.getElementById("avisoCopiado");
+    aviso.style.opacity = "1";
+    setTimeout(()=>{ aviso.style.opacity = "0"; }, 1500);
+  });
+}
+
+function irDiscord(){
+  fbq('track','Lead');
+  const boton=document.getElementById("boton");
+  boton.disabled = true;
+  boton.innerText="Ingresando...";
+  setTimeout(function(){
+    window.location.href = DISCORD_INVITE;
+  }, 400);
+}
+
+window.addEventListener('DOMContentLoaded', generarCodigo);
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1383716853246156&ev=PageView&noscript=1"
@@ -43,12 +111,47 @@ color:white;
 .contenedor{
 text-align:center;
 animation:fade 1.2s ease;
+max-width:520px;
+padding:0 20px;
 }
 h1{
 font-size:40px;
 margin-bottom:40px;
 letter-spacing:1px;
 text-shadow:0 0 15px rgba(88,101,242,0.6);
+}
+p.instrucciones{
+font-size:16px;
+line-height:1.5;
+color:#dcdde3;
+margin-bottom:30px;
+}
+.codigo-box{
+font-size:42px;
+font-weight:bold;
+letter-spacing:8px;
+background:#111214;
+border:2px solid #5865F2;
+border-radius:10px;
+padding:18px 30px;
+margin-bottom:8px;
+display:inline-block;
+box-shadow:0 0 20px rgba(88,101,242,0.4);
+cursor:pointer;
+user-select:all;
+transition:all .2s;
+}
+.codigo-box:hover{
+transform:scale(1.04);
+background:#17181b;
+}
+.aviso-copiado{
+height:20px;
+font-size:14px;
+color:#57F287;
+opacity:0;
+transition:opacity .3s;
+margin-bottom:22px;
 }
 .boton{
 background:#5865F2;
@@ -66,6 +169,11 @@ transition:all .25s;
 transform:scale(1.07);
 background:#4752C4;
 box-shadow:0 15px 40px rgba(88,101,242,0.7);
+}
+.boton:disabled{
+opacity:0.7;
+cursor:default;
+transform:none;
 }
 @keyframes fade{
 from{
@@ -113,11 +221,22 @@ transform:translateY(-10vh);
 <span style="left:80%;animation-delay:2s"></span>
 <span style="left:90%;animation-delay:6s"></span>
 </div>
+
 <div class="contenedor">
 <h1>Todo el contenido de Argentina 🔥</h1>
-<button id="boton" class="boton" onclick="irDiscord()">
+
+<p class="instrucciones">Guardá este código para entrar al Discord</p>
+<div class="codigo-box" id="codigo" onclick="copiarCodigo()">----</div>
+<div id="avisoCopiado" class="aviso-copiado">¡Copiado!</div>
+
+<p class="instrucciones">
+Una vez adentro, escribí <b>/verificar</b> y pegalo cuando te lo pida el bot.
+</p>
+
+<button id="boton" class="boton" onclick="irDiscord()" style="display:none;">
 Entrar al Discord
 </button>
 </div>
+
 </body>
 </html>
