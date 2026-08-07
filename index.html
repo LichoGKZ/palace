@@ -93,14 +93,15 @@ function copiarCodigo(){
   });
 }
 
-function irDiscord(){
-  fbq('track','Lead');
-  const boton=document.getElementById("boton");
-  boton.disabled = true;
-  boton.innerText="Ingresando...";
-  setTimeout(function(){
-    window.location.href = DISCORD_INVITE;
-  }, 400);
+function irDiscord() {
+    const boton = document.getElementById('boton');
+
+    boton.disabled = true;
+    boton.innerText = "Ingresando...";
+
+    setTimeout(function() {
+        window.location.href = DISCORD_INVITE;
+    }, 400);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
