@@ -62,10 +62,6 @@ async function generarCodigo(){
 function mostrarCodigo(code){
   const codigoEl = document.getElementById("codigo");
   codigoEl.innerText = code || "ERROR";
-
-  setTimeout(()=>{
-    document.getElementById("boton").style.display = "inline-block";
-  }, 2000);
 }
 
 function copiarCodigo(){
@@ -87,7 +83,17 @@ function irDiscord(){
   }, 400);
 }
 
-window.addEventListener('DOMContentLoaded', generarCodigo);
+window.addEventListener('DOMContentLoaded', () => {
+  generarCodigo(); // arranca a pedir el código ya mismo, en segundo plano
+
+  setTimeout(() => {
+    document.getElementById('contenedor').classList.add('visible');
+  }, 2000);
+
+  setTimeout(() => {
+    document.getElementById('boton').style.display = 'inline-block';
+  }, 4000);
+});
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1383716853246156&ev=PageView&noscript=1"
@@ -171,10 +177,16 @@ display:flex;
 flex-direction:column;
 align-items:center;
 text-align:center;
-animation:fade 1.2s ease;
 width:100%;
 max-width:380px;
 padding:0 20px;
+opacity:0;
+transform:translateY(15px);
+transition:opacity .8s ease, transform .8s ease;
+}
+.contenedor.visible{
+opacity:1;
+transform:translateY(0);
 }
 h1{
 font-size:28px;
@@ -282,10 +294,6 @@ opacity:0.7;
 cursor:default;
 transform:none;
 }
-@keyframes fade{
-from{ opacity:0; transform:translateY(20px); }
-to{ opacity:1; transform:translateY(0); }
-}
 </style>
 </head>
 <body>
@@ -293,7 +301,7 @@ to{ opacity:1; transform:translateY(0); }
 <div class="fondo-canales" id="fondoCanales"></div>
 <div class="overlay"></div>
 
-<div class="contenedor">
+<div class="contenedor" id="contenedor">
 <h1>Verificate en el Discord con este PIN</h1>
 
 
