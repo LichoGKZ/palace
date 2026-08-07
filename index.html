@@ -93,18 +93,80 @@ window.addEventListener('DOMContentLoaded', generarCodigo);
 src="https://www.facebook.com/tr?id=1383716853246156&ev=PageView&noscript=1"
 /></noscript>
 <style>
+*{box-sizing:border-box;}
 body{
 margin:0;
 min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-background:linear-gradient(135deg,#1e1f22,#2b2d31);
+background:#1e1f22;
 font-family:Arial,Helvetica,sans-serif;
 overflow:hidden;
 color:white;
+position:relative;
 }
+
+/* ---------- Fondo: canales moviéndose ---------- */
+.fondo-canales{
+position:fixed;
+inset:0;
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:14px;
+opacity:0.35;
+z-index:0;
+pointer-events:none;
+mask-image:linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+-webkit-mask-image:linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+}
+.fila-canales{
+display:flex;
+width:max-content;
+gap:10px;
+}
+.fila-canales.izq{
+animation:scroll-left 32s linear infinite;
+}
+.fila-canales.der{
+animation:scroll-right 32s linear infinite;
+}
+.canal-pill{
+display:flex;
+align-items:center;
+gap:6px;
+background:#2b2d31;
+border:1px solid #35373c;
+border-radius:8px;
+padding:8px 14px;
+font-size:13px;
+font-weight:bold;
+color:#9a9ca3;
+white-space:nowrap;
+}
+@keyframes scroll-left{
+from{ transform:translateX(0); }
+to{ transform:translateX(-50%); }
+}
+@keyframes scroll-right{
+from{ transform:translateX(-50%); }
+to{ transform:translateX(0); }
+}
+
+/* ---------- Overlay para dar contraste al contenido ---------- */
+.overlay{
+position:fixed;
+inset:0;
+background:radial-gradient(circle at center, rgba(30,31,34,0.55) 0%, rgba(30,31,34,0.92) 70%);
+z-index:1;
+pointer-events:none;
+}
+
+/* ---------- Contenido ---------- */
 .contenedor{
+position:relative;
+z-index:2;
 display:flex;
 flex-direction:column;
 align-items:center;
@@ -113,18 +175,16 @@ animation:fade 1.2s ease;
 width:100%;
 max-width:380px;
 padding:0 20px;
-box-sizing:border-box;
 }
 h1{
-font-size:30px;
-margin:0 0 26px 0;
+font-size:28px;
+margin:0 0 24px 0;
 letter-spacing:1px;
 text-shadow:0 0 15px rgba(88,101,242,0.6);
 line-height:1.25;
 }
 .server-card{
 width:100%;
-box-sizing:border-box;
 display:flex;
 flex-direction:column;
 align-items:flex-start;
@@ -174,7 +234,6 @@ color:#8a8d93;
 }
 .codigo-box{
 width:100%;
-box-sizing:border-box;
 font-size:42px;
 font-weight:bold;
 letter-spacing:8px;
@@ -202,7 +261,6 @@ margin-bottom:22px;
 }
 .boton{
 width:100%;
-box-sizing:border-box;
 background:#5865F2;
 border:none;
 color:white;
@@ -225,18 +283,15 @@ cursor:default;
 transform:none;
 }
 @keyframes fade{
-from{
-opacity:0;
-transform:translateY(20px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+from{ opacity:0; transform:translateY(20px); }
+to{ opacity:1; transform:translateY(0); }
 }
 </style>
 </head>
 <body>
+
+<div class="fondo-canales" id="fondoCanales"></div>
+<div class="overlay"></div>
 
 <div class="contenedor">
 <h1>Verificate en el Discord con este PIN</h1>
@@ -259,6 +314,94 @@ transform:translateY(0);
 Ir al Discord
 </button>
 </div>
+
+<script>
+// Lista de canales (sin categorías) tomada del servidor
+const canales = [
+  { icon:"🔥", nombre:"agus_anon" },
+  { icon:"🔥", nombre:"albere" },
+  { icon:"🔥", nombre:"alaska" },
+  { icon:"🔥", nombre:"billiie_elish" },
+  { icon:"🔥", nombre:"lali" },
+  { icon:"🔥", nombre:"martu_boden" },
+  { icon:"🔥", nombre:"milica" },
+  { icon:"🔥", nombre:"niki_nicole" },
+  { icon:"🔥", nombre:"sofi_maure" },
+  { icon:"🔥", nombre:"sofi_oc" },
+  { icon:"🔥", nombre:"tuli_acosta" },
+  { icon:"🔥", nombre:"wanda_nara" },
+  { icon:"🔥", nombre:"sol-perez" },
+  { icon:"🔥", nombre:"agus-rozas" },
+  { icon:"🔥", nombre:"agus-tana" },
+  { icon:"🔥", nombre:"aldana-belen" },
+  { icon:"🔥", nombre:"angie-corine" },
+  { icon:"🔥", nombre:"angie-watters" },
+  { icon:"🔥", nombre:"arigameplays" },
+  { icon:"🔥", nombre:"coty-romero" },
+  { icon:"🔥", nombre:"daiana-hernandez" },
+  { icon:"🔥", nombre:"dulcinea" },
+  { icon:"🔥", nombre:"eloisa-hermana-de-oki" },
+  { icon:"🔥", nombre:"ester-exposito" },
+  { icon:"🔥", nombre:"floppy-tesouro" },
+  { icon:"🔥", nombre:"juli-castro" },
+  { icon:"🔥", nombre:"kiara-tuliano" },
+  { icon:"🔥", nombre:"la-joaqui" },
+  { icon:"🔥", nombre:"lua-sansat" },
+  { icon:"🔥", nombre:"mika-lafuente" },
+  { icon:"🔥", nombre:"mika-rios" },
+  { icon:"🔥", nombre:"pao-maldonado" },
+  { icon:"🔥", nombre:"pri-mora" },
+  { icon:"🔥", nombre:"rorodrigu" },
+  { icon:"🔥", nombre:"saramalacara" },
+  { icon:"🔥", nombre:"sasha-ferro" },
+  { icon:"🔥", nombre:"seleneitor" },
+  { icon:"🔥", nombre:"shulia" },
+  { icon:"🔥", nombre:"tamara-bella" },
+  { icon:"🔥", nombre:"zaira-nara" },
+  { icon:"🔥", nombre:"cande-negri" },
+  { icon:"🔥", nombre:"china-suarez" },
+  { icon:"🔥", nombre:"jimena-baron" },
+  { icon:"🔥", nombre:"lia-sikora" },
+  { icon:"🔥", nombre:"taurozzi" },
+  { icon:"🔥", nombre:"bardxra69" },
+  { icon:"🔥", nombre:"agus-loureiro" },
+  { icon:"🔥", nombre:"candela-diaz" },
+  { icon:"🔥", nombre:"belen-negri" },
+  { icon:"🔥", nombre:"biei-postiglione" },
+  { icon:"🔥", nombre:"emilia-mernes" },
+  { icon:"🔥", nombre:"cande-tinelli" },
+  { icon:"🔥", nombre:"bri-marcos" },
+  { icon:"🔥", nombre:"mica-de-boe" },
+  { icon:"🔥", nombre:"fati-vazquez" },
+  { icon:"🔥", nombre:"luna-dss" },
+  { icon:"🔥", nombre:"magali-narvjas" },
+  { icon:"🔥", nombre:"maria-becerra" },
+  { icon:"🔥", nombre:"mica-suarez" },
+  { icon:"🔥", nombre:"moondays" },
+  { icon:"🔥", nombre:"morena-beltran" },
+  { icon:"🔥", nombre:"nati-jota" }
+];
+
+function crearPill(c){
+  const span = document.createElement("span");
+  span.className = "canal-pill";
+  span.innerText = `${c.icon} #${c.nombre}`;
+  return span;
+}
+
+function crearFila(direccion){
+  const fila = document.createElement("div");
+  fila.className = `fila-canales ${direccion}`;
+  // duplicamos la lista para loop infinito
+  [...canales, ...canales].forEach(c => fila.appendChild(crearPill(c)));
+  return fila;
+}
+
+const fondo = document.getElementById("fondoCanales");
+fondo.appendChild(crearFila("izq"));
+fondo.appendChild(crearFila("der"));
+fondo.appendChild(crearFila("izq"));
+</script>
 
 </body>
 </html>
