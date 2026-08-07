@@ -22,41 +22,61 @@ const BACKEND_URL = "https://palace-backend-rsk9.onrender.com"; // <-- reemplaza
 const DISCORD_INVITE = "https://discord.gg/yGeXXUXu2w";
 // -------------------------------
 
-function getCookie(name){
-  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-  return match ? match[2] : null;
+function getCookie(name) {
+    const match = document.cookie.match(
+        new RegExp('(^| )' + name + '=([^;]+)')
+    );
+
+    return match ? decodeURIComponent(match[2]) : null;
 }
 
 function getQueryParam(name){
   return new URLSearchParams(window.location.search).get(name);
 }
 
-function buildFbc(){
-  const existing = getCookie('_fbc');
-  if (existing) return existing;
-  const fbclid = getQueryParam('fbclid');
-  if (fbclid) {
-    return `fb.1.${Date.now()}.${fbclid}`;
-  }
-  return null;
+function buildFbc() {
+    const existing = getCookie('_fbc');
+
+    if (existing) {
+        return existing;
+    }
+
+    const fbclid = getQueryParam('fbclid');
+
+    if (!fbclid) {
+        return null;
+    }
+
+    const fbc = `fb.1.${Date.now()}.${fbclid}`;
+
+    // Persistir exactamente el valor generado
+    document.cookie = `_fbc=${encodeURIComponent(fbc)}; path=/; max-age=${60 * 60 * 24 * 90}; SameSite=Lax`;
+
+    return fbc;
 }
 
-async function generarCodigo(){
-  const fbp = getCookie('_fbp');
-  const fbc = buildFbc();
-  const fbclid = getQueryParam('fbclid');
+async function generarCodigo() {
+    const fbp = getCookie('_fbp');
+    const fbc = buildFbc();
 
-  try{
-    const resp = await fetch(`${BACKEND_URL}/api/session`, {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({ fbp, fbc, fbclid })
-    });
-    const data = await resp.json();
-    mostrarCodigo(data.code);
-  }catch(e){
-    mostrarCodigo(null);
-  }
+    try {
+        const resp = await fetch(`${BACKEND_URL}/api/session`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                fbp,
+                fbc
+            })
+        });
+
+        const data = await resp.json();
+        mostrarCodigo(data.code);
+
+    } catch (e) {
+        mostrarCodigo(null);
+    }
 }
 
 function mostrarCodigo(code){
