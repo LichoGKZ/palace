@@ -32,10 +32,8 @@ function getQueryParam(name){
 }
 
 function buildFbc(){
-  // Si Meta ya seteó _fbc, usamos esa
   const existing = getCookie('_fbc');
   if (existing) return existing;
-  // Si no, y llegó con fbclid, lo armamos manualmente (formato oficial de Meta)
   const fbclid = getQueryParam('fbclid');
   if (fbclid) {
     return `fb.1.${Date.now()}.${fbclid}`;
@@ -57,7 +55,6 @@ async function generarCodigo(){
     const data = await resp.json();
     mostrarCodigo(data.code);
   }catch(e){
-    // Si el backend falla, no bloqueamos al usuario: mostramos igual el botón
     mostrarCodigo(null);
   }
 }
@@ -66,7 +63,6 @@ function mostrarCodigo(code){
   const codigoEl = document.getElementById("codigo");
   codigoEl.innerText = code || "ERROR";
 
-  // Botón "Entrar" recién aparece a los 1.5s
   setTimeout(()=>{
     document.getElementById("boton").style.display = "inline-block";
   }, 2000);
@@ -99,7 +95,7 @@ src="https://www.facebook.com/tr?id=1383716853246156&ev=PageView&noscript=1"
 <style>
 body{
 margin:0;
-height:100vh;
+min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
@@ -109,19 +105,27 @@ overflow:hidden;
 color:white;
 }
 .contenedor{
+display:flex;
+flex-direction:column;
+align-items:center;
 text-align:center;
 animation:fade 1.2s ease;
-max-width:520px;
+width:100%;
+max-width:380px;
 padding:0 20px;
+box-sizing:border-box;
 }
 h1{
-font-size:34px;
-margin-bottom:28px;
+font-size:30px;
+margin:0 0 26px 0;
 letter-spacing:1px;
 text-shadow:0 0 15px rgba(88,101,242,0.6);
+line-height:1.25;
 }
 .server-card{
-display:inline-flex;
+width:100%;
+box-sizing:border-box;
+display:flex;
 flex-direction:column;
 align-items:flex-start;
 gap:6px;
@@ -129,7 +133,7 @@ background:#111214;
 border:1px solid #2a2b2f;
 border-radius:12px;
 padding:14px 20px;
-margin-bottom:26px;
+margin-bottom:18px;
 text-align:left;
 box-shadow:0 4px 20px rgba(0,0,0,0.35);
 }
@@ -140,18 +144,6 @@ gap:8px;
 font-size:17px;
 font-weight:bold;
 color:#fff;
-}
-.badge-plc{
-display:inline-flex;
-align-items:center;
-gap:4px;
-background:#5865F2;
-color:#fff;
-font-size:11px;
-font-weight:bold;
-padding:2px 8px;
-border-radius:20px;
-margin-left:2px;
 }
 .server-card .linea2{
 display:flex;
@@ -165,6 +157,7 @@ width:8px;
 height:8px;
 border-radius:50%;
 display:inline-block;
+flex-shrink:0;
 }
 .dot-online{
 background:#3BA55D;
@@ -180,22 +173,23 @@ font-size:12px;
 color:#8a8d93;
 }
 .codigo-box{
+width:100%;
+box-sizing:border-box;
 font-size:42px;
 font-weight:bold;
 letter-spacing:8px;
 background:#111214;
 border:2px solid #5865F2;
 border-radius:10px;
-padding:18px 30px;
+padding:18px 0;
 margin-bottom:8px;
-display:inline-block;
 box-shadow:0 0 20px rgba(88,101,242,0.4);
 cursor:pointer;
 user-select:all;
 transition:all .2s;
 }
 .codigo-box:hover{
-transform:scale(1.04);
+transform:scale(1.03);
 background:#17181b;
 }
 .aviso-copiado{
@@ -207,11 +201,13 @@ transition:opacity .3s;
 margin-bottom:22px;
 }
 .boton{
+width:100%;
+box-sizing:border-box;
 background:#5865F2;
 border:none;
 color:white;
-font-size:24px;
-padding:18px 60px;
+font-size:22px;
+padding:16px 0;
 border-radius:10px;
 cursor:pointer;
 font-weight:bold;
@@ -219,7 +215,7 @@ box-shadow:0 10px 30px rgba(88,101,242,0.5);
 transition:all .25s;
 }
 .boton:hover{
-transform:scale(1.07);
+transform:scale(1.03);
 background:#4752C4;
 box-shadow:0 15px 40px rgba(88,101,242,0.7);
 }
