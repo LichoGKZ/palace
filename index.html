@@ -126,8 +126,12 @@ function copiarCodigo(){
 function irDiscord() {
     const boton = document.getElementById('boton');
 
-    // Evento TikTok
+    // Eventos TikTok
     ttq.track('ClickButton');
+    ttq.track('InitiateCheckout', {
+        content_name: 'Palace VIP Oro',
+        content_type: 'product'
+    });
 
     boton.disabled = true;
     boton.innerText = "Ingresando...";
@@ -139,6 +143,12 @@ function irDiscord() {
 
 window.addEventListener('DOMContentLoaded', () => {
   generarCodigo(); // arranca a pedir el código ya mismo, en segundo plano
+
+  // Evento TikTok: visita a la landing (completa el funnel para la vertical Commerce)
+  ttq.track('ViewContent', {
+      content_name: 'Palace VIP Oro',
+      content_type: 'product'
+  });
 
   setTimeout(() => {
     document.getElementById('contenedor').classList.add('visible');
