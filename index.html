@@ -81,6 +81,8 @@ function getTtp() {
     return getCookie('_ttp');
 }
 
+let sessionId = null; // se completa al crear la sesión, lo usa irDiscord() para el InitiateCheckout server-side
+
 async function generarCodigo() {
     const fbp = getCookie('_fbp');
     const fbc = buildFbc();
@@ -102,10 +104,30 @@ async function generarCodigo() {
         });
 
         const data = await resp.json();
+        sessionId = data.session_id;
         mostrarCodigo(data.code);
 
     } catch (e) {
         mostrarCodigo(null);
+    }
+}
+
+function notificarCheckoutClick() {
+    // Redundancia server-side del InitiateCheckout: no bloquea la navegación,
+    // si falla o tarda no importa, es "fire and forget".
+    if (!sessionId) return;
+
+    try {
+        fetch(`${BACKEND_URL}/api/checkout-click`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ session_id: sessionId }),
+            keepalive: true // para que el request sobreviva aunque la página navegue enseguida
+        });
+    } catch (e) {
+        // silencioso, no debe afectar la experiencia del usuario
     }
 }
 
@@ -126,12 +148,15 @@ function copiarCodigo(){
 function irDiscord() {
     const boton = document.getElementById('boton');
 
-    // Eventos TikTok
+    // Eventos TikTok (client-side, vía pixel)
     ttq.track('ClickButton');
     ttq.track('InitiateCheckout', {
         content_name: 'Palace VIP Oro',
         content_type: 'product'
     });
+
+    // Redundancia server-side (Events API), por si el pixel del navegador no llega a disparar
+    notificarCheckoutClick();
 
     boton.disabled = true;
     boton.innerText = "Ingresando...";
