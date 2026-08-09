@@ -63,9 +63,29 @@ function buildFbc() {
     return getCookie('_fbc');
 }
 
+function getTtclid() {
+    // El ttclid llega por URL cuando el clic viene de un anuncio de TikTok.
+    // Lo guardamos en cookie propia para no perderlo si el usuario navega sin el parámetro.
+    const ttclid = getQueryParam('ttclid');
+
+    if (ttclid) {
+        document.cookie = `_ttclid=${encodeURIComponent(ttclid)}; path=/; max-age=${60 * 60 * 24 * 90}; SameSite=Lax`;
+        return ttclid;
+    }
+
+    return getCookie('_ttclid');
+}
+
+function getTtp() {
+    // _ttp es la cookie que pone el propio pixel de TikTok (ttq.load) en el navegador
+    return getCookie('_ttp');
+}
+
 async function generarCodigo() {
     const fbp = getCookie('_fbp');
     const fbc = buildFbc();
+    const ttclid = getTtclid();
+    const ttp = getTtp();
 
     try {
         const resp = await fetch(`${BACKEND_URL}/api/session`, {
@@ -75,7 +95,9 @@ async function generarCodigo() {
             },
             body: JSON.stringify({
                 fbp,
-                fbc
+                fbc,
+                ttclid,
+                ttp
             })
         });
 
