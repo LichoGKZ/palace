@@ -35,24 +35,16 @@ function getQueryParam(name){
 }
 
 function buildFbc() {
-    const existing = getCookie('_fbc');
-
-    if (existing) {
-        return existing;
-    }
-
     const fbclid = getQueryParam('fbclid');
 
-    if (!fbclid) {
-        return null;
+    if (fbclid) {
+        const fbc = `fb.1.${Date.now()}.${fbclid}`;
+        document.cookie = `_fbc=${encodeURIComponent(fbc)}; path=/; max-age=${60 * 60 * 24 * 90}; SameSite=Lax`;
+        return fbc;
     }
 
-    const fbc = `fb.1.${Date.now()}.${fbclid}`;
-
-    // Persistir exactamente el valor generado
-    document.cookie = `_fbc=${encodeURIComponent(fbc)}; path=/; max-age=${60 * 60 * 24 * 90}; SameSite=Lax`;
-
-    return fbc;
+    // Sin fbclid en la URL: caemos a la cookie existente si la hay
+    return getCookie('_fbc');
 }
 
 async function generarCodigo() {
