@@ -151,6 +151,7 @@ function irDiscord() {
     // Eventos TikTok (client-side, vía pixel)
     ttq.track('ClickButton');
     ttq.track('InitiateCheckout', {
+        content_id: 'vip-oro',
         content_name: 'Palace VIP Oro',
         content_type: 'product'
     });
@@ -171,6 +172,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Evento TikTok: visita a la landing (completa el funnel para la vertical Commerce)
   ttq.track('ViewContent', {
+      content_id: 'vip-oro',
       content_name: 'Palace VIP Oro',
       content_type: 'product'
   });
